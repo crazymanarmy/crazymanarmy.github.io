@@ -1,86 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>HITCON 2021 Misc Writeup</title>
-    <url>/2021/12/08/HITCON-2021-Misc-Writeup/</url>
-    <content><![CDATA[<h1 id="HITCON-2021-Misc-Writeup"><a href="#HITCON-2021-Misc-Writeup" class="headerlink" title="HITCON 2021 Misc Writeup"></a>HITCON 2021 Misc Writeup</h1><h2 id="FBI-WARNING-orange"><a href="#FBI-WARNING-orange" class="headerlink" title="FBI WARNING(orange)"></a>FBI WARNING(orange)</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Please help FBI to arrest Ωrange!</span><br><span class="line">(Flag format: hitcon&#123;&lt;ip-address-of-Ωrange&gt;&#125;)</span><br><span class="line">(Hint: The prefix of the IP address is 219)</span><br><span class="line">http://3.112.91.135/</span><br><span class="line">Author: orange</span><br></pre></td></tr></table></figure>
-
-<p>网站如下:</p>
-<p><img src="https://i.imgur.com/RuwxUew.png"></p>
-<p>找了找相关的该网站的相关的源码 找到了</p>
-<p><a href="https://github.com/futoase/futaba-ng/blob/master/app/dest/futaba.php">https://github.com/futoase/futaba-ng/blob/master/app/dest/futaba.php</a></p>
-<p>本题的主要部分</p>
-<p><img src="https://i.imgur.com/aKW9ZNv.png"></p>
-<p>对应的相关代码</p>
-<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="title function_ invoke__">define</span>(<span class="string">&quot;IDSEED&quot;</span>, <span class="string">&#x27;idの種&#x27;</span>);		<span class="comment">//idの種</span></span><br></pre></td></tr></table></figure>
-
-<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="variable">$c_pass</span> = <span class="variable">$pwd</span>;</span><br><span class="line">  <span class="variable">$pass</span> = (<span class="variable">$pwd</span>) ? <span class="title function_ invoke__">substr</span>(<span class="title function_ invoke__">md5</span>(<span class="variable">$pwd</span>),<span class="number">2</span>,<span class="number">8</span>) : <span class="string">&quot;*&quot;</span>;</span><br><span class="line">  <span class="variable">$youbi</span> = <span class="keyword">array</span>(<span class="string">&#x27;日&#x27;</span>,<span class="string">&#x27;月&#x27;</span>,<span class="string">&#x27;火&#x27;</span>,<span class="string">&#x27;水&#x27;</span>,<span class="string">&#x27;木&#x27;</span>,<span class="string">&#x27;金&#x27;</span>,<span class="string">&#x27;土&#x27;</span>);</span><br><span class="line">  <span class="variable">$yd</span> = <span class="variable">$youbi</span>[<span class="title function_ invoke__">gmdate</span>(<span class="string">&quot;w&quot;</span>, <span class="variable">$time</span>+<span class="number">9</span>*<span class="number">60</span>*<span class="number">60</span>)] ;</span><br><span class="line">  <span class="variable">$now</span> = (</span><br><span class="line">    <span class="title function_ invoke__">gmdate</span>(<span class="string">&quot;y/m/d&quot;</span>,<span class="variable">$time</span>+<span class="number">9</span>*<span class="number">60</span>*<span class="number">60</span>) . </span><br><span class="line">    <span class="string">&quot;(&quot;</span> .(<span class="keyword">string</span>)<span class="variable">$yd</span> . <span class="string">&quot;)&quot;</span> . </span><br><span class="line">    <span class="title function_ invoke__">gmdate</span>(<span class="string">&quot;H:i&quot;</span>,<span class="variable">$time</span>+<span class="number">9</span>*<span class="number">60</span>*<span class="number">60</span>)</span><br><span class="line">  );</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span>(DISP_ID)&#123;</span><br><span class="line">    <span class="keyword">if</span>(<span class="variable">$email</span>&amp;&amp;DISP_ID==<span class="number">1</span>)&#123;</span><br><span class="line">      <span class="variable">$now</span> .= <span class="string">&quot; ID:???&quot;</span>;</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">      <span class="variable">$now</span>.=<span class="string">&quot; ID:&quot;</span>.<span class="title function_ invoke__">substr</span>(<span class="title function_ invoke__">crypt</span>(<span class="title function_ invoke__">md5</span>(<span class="variable">$_SERVER</span>[<span class="string">&quot;REMOTE_ADDR&quot;</span>].IDSEED.<span class="title function_ invoke__">gmdate</span>(<span class="string">&quot;Ymd&quot;</span>, <span class="variable">$time</span>+<span class="number">9</span>*<span class="number">60</span>*<span class="number">60</span>)),<span class="string">&#x27;id&#x27;</span>),-<span class="number">8</span>);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
-
-<p>从这里我们可以得知id生成的规则</p>
-<p>再加上提示中说ip的前面部分是219</p>
-<p>写脚本来解密(by stypr)</p>
-<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span>(<span class="variable">$i</span>=<span class="number">0</span>;<span class="variable">$i</span>&lt;<span class="number">256</span>;<span class="variable">$i</span>++)&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="variable">$j</span>=<span class="number">0</span>;<span class="variable">$j</span>&lt;<span class="number">256</span>;<span class="variable">$j</span>++)&#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="variable">$k</span>=<span class="number">0</span>;<span class="variable">$k</span>&lt;<span class="number">256</span>;<span class="variable">$k</span>++)&#123;</span><br><span class="line">            <span class="variable">$actual</span> = <span class="string">&quot;219.&quot;</span>.<span class="variable">$i</span>.<span class="string">&quot;.&quot;</span>.<span class="variable">$j</span>.<span class="string">&quot;.&quot;</span>.<span class="variable">$k</span>.<span class="string">&quot;idの種&quot;</span>. <span class="string">&quot;20211203&quot;</span>;</span><br><span class="line">            <span class="variable">$val</span> = <span class="title function_ invoke__">substr</span>(<span class="title function_ invoke__">crypt</span>(<span class="title function_ invoke__">md5</span>(<span class="variable">$actual</span>), <span class="string">&quot;id&quot;</span>), -<span class="number">8</span>);</span><br><span class="line">            <span class="keyword">if</span>(<span class="variable">$val</span> == <span class="string">&quot;ueyUrcwA&quot;</span>)&#123;</span><br><span class="line">                <span class="keyword">echo</span> <span class="variable">$actual</span>;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>跑出对应的ip</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ php a.php</span><br><span class="line">219.91.64.47idの種20211203</span><br></pre></td></tr></table></figure>
-
-<p>flag:</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hitcon&#123;219.91.64.47&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="baba-is-misc"><a href="#baba-is-misc" class="headerlink" title="baba is misc:"></a>baba is misc:</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">BABA IS MISC</span><br><span class="line">MISC HAS FLAG</span><br><span class="line">FLAG HAS WORD AND SPACE</span><br><span class="line">FLAG IS WIN</span><br><span class="line">baba_is_misc-b6a43cc8b24d3cc1592077f68d5089c0491b6021.bin</span><br><span class="line">Author: ddaa</span><br><span class="line"></span><br><span class="line">hint:</span><br><span class="line">The flag prefix `hitcon&#123;` is lower case. The other words in flag content are uppercase.</span><br></pre></td></tr></table></figure>
-
-<p>下载下来发现是个pfs0文件 挂载后发现是一个baba is you的游戏</p>
-<p>用<a href="https://github.com/jakcron/nstool">https://github.com/jakcron/nstool</a> 进行分离 分离出program.nca的主程序</p>
-<p>再使用<a href="https://github.com/SciresM/hactool">https://github.com/SciresM/hactool</a> 分离相关的文件 可以分离出相关的配置与Lua文件</p>
-<p>然后发现大部分是原始的游戏资源,但是玩通关也没有flag</p>
-<p>第0关的标题是 <code>find all flag in maps</code></p>
-<p><img src="https://i.imgur.com/bGQlHnB.png"></p>
-<p>且同时告诉了我们第一部分flag的信息是<code>hitcon&#123;</code></p>
-<p><img src="https://i.imgur.com/jXs9Wdz.png"></p>
-<p>之后通过下载steam上原始的baba is you文件 然后与题目的资源进行diff</p>
-<p>发现level<code>0 17 21 80 82 101 111 130 176</code>的地图与之前存在改变</p>
-<p>这就意味着这些地图内可能存在的相关flag的信息</p>
-<p>使用<a href="https://github.com/ShootMe/BabaIsYouEditor">https://github.com/ShootMe/BabaIsYouEditor</a> 解析地图</p>
-<p>level0: <code>hitcon&#123;</code></p>
-<p><img src="https://i.imgur.com/8BJ7q4w.png"></p>
-<p>level17: <code>BABA IS YOU</code></p>
-<p><img src="https://i.imgur.com/GLMF2jt.png"></p>
-<p>level21: <code>IS A</code></p>
-<p><img src="https://i.imgur.com/yUpGsKs.png"></p>
-<p>level80: <code>GOOD</code></p>
-<p><img src="https://i.imgur.com/YKRWI7S.png"></p>
-<p>level82: <code>GAME</code></p>
-<p><img src="https://i.imgur.com/yd9Qpjb.png"></p>
-<p>level101:<code>BUT</code></p>
-<p><img src="https://i.imgur.com/WhqqcXl.png"></p>
-<p>level111: <code>TOO</code></p>
-<p><img src="https://i.imgur.com/CTk53f1.png"></p>
-<p>level130: <code>DIFFICULT</code></p>
-<p><img src="https://i.imgur.com/9sQocr4.png"></p>
-<p>level176: <code>!!!!!!&#125;</code></p>
-<p><img src="https://i.imgur.com/OW5nxZL.png"></p>
-<p>当然这当时的!是猜出来 后来看discord上讨论需要安装最新的游戏扩展</p>
-<p><img src="https://i.imgur.com/NoiaeDC.png"></p>
-<p>看来我运气还是不错</p>
-<p>最后总结得到</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">000 -&gt; hitcon&#123;</span><br><span class="line">017 -&gt; BABA IS OOU</span><br><span class="line">021 -&gt; IS A</span><br><span class="line">080 -&gt; GOOD</span><br><span class="line">082 -&gt; GAME</span><br><span class="line">101 -&gt; BUT</span><br><span class="line">111 -&gt; TOO</span><br><span class="line">130 -&gt; DIFFICULT</span><br><span class="line">176 -&gt; !!!!!!!&#125;</span><br></pre></td></tr></table></figure>
-
-<p>flag:</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hitcon&#123;BABA IS YOU IS A GOOD GAME BUT TOO DIFFICULT !!!!!!&#125;</span><br></pre></td></tr></table></figure>
-
-
-]]></content>
-      <categories>
-        <category>Writeup</category>
-      </categories>
-      <tags>
-        <tag>Misc</tag>
-        <tag>CTF</tag>
-        <tag>BABA IS YOU</tag>
-        <tag>PHP</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>ASIS CTF 2021 Misc Writeup</title>
     <url>/2021/10/26/ASIS-CTF-2021-Misc-Writeup/</url>
     <content><![CDATA[<h1 id="ASIS-CTF-2021-Misc-Writeup"><a href="#ASIS-CTF-2021-Misc-Writeup" class="headerlink" title="ASIS CTF 2021 Misc Writeup"></a>ASIS CTF 2021 Misc Writeup</h1><h2 id="challenge-Factory"><a href="#challenge-Factory" class="headerlink" title="challenge-Factory:"></a>challenge-Factory:</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">In the simplest terms, factory misco-graphy is the ratio of output to input!</span><br></pre></td></tr></table></figure>
@@ -163,11 +83,91 @@
         <category>Writeup</category>
       </categories>
       <tags>
+        <tag>Forensics</tag>
         <tag>Misc</tag>
         <tag>CTF</tag>
-        <tag>Forensics</tag>
         <tag>YAFFS</tag>
         <tag>Android</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>HITCON 2021 Misc Writeup</title>
+    <url>/2021/12/08/HITCON-2021-Misc-Writeup/</url>
+    <content><![CDATA[<h1 id="HITCON-2021-Misc-Writeup"><a href="#HITCON-2021-Misc-Writeup" class="headerlink" title="HITCON 2021 Misc Writeup"></a>HITCON 2021 Misc Writeup</h1><h2 id="FBI-WARNING-orange"><a href="#FBI-WARNING-orange" class="headerlink" title="FBI WARNING(orange)"></a>FBI WARNING(orange)</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Please help FBI to arrest Ωrange!</span><br><span class="line">(Flag format: hitcon&#123;&lt;ip-address-of-Ωrange&gt;&#125;)</span><br><span class="line">(Hint: The prefix of the IP address is 219)</span><br><span class="line">http://3.112.91.135/</span><br><span class="line">Author: orange</span><br></pre></td></tr></table></figure>
+
+<p>网站如下:</p>
+<p><img src="https://i.imgur.com/RuwxUew.png"></p>
+<p>找了找相关的该网站的相关的源码 找到了</p>
+<p><a href="https://github.com/futoase/futaba-ng/blob/master/app/dest/futaba.php">https://github.com/futoase/futaba-ng/blob/master/app/dest/futaba.php</a></p>
+<p>本题的主要部分</p>
+<p><img src="https://i.imgur.com/aKW9ZNv.png"></p>
+<p>对应的相关代码</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="title function_ invoke__">define</span>(<span class="string">&quot;IDSEED&quot;</span>, <span class="string">&#x27;idの種&#x27;</span>);		<span class="comment">//idの種</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="variable">$c_pass</span> = <span class="variable">$pwd</span>;</span><br><span class="line">  <span class="variable">$pass</span> = (<span class="variable">$pwd</span>) ? <span class="title function_ invoke__">substr</span>(<span class="title function_ invoke__">md5</span>(<span class="variable">$pwd</span>),<span class="number">2</span>,<span class="number">8</span>) : <span class="string">&quot;*&quot;</span>;</span><br><span class="line">  <span class="variable">$youbi</span> = <span class="keyword">array</span>(<span class="string">&#x27;日&#x27;</span>,<span class="string">&#x27;月&#x27;</span>,<span class="string">&#x27;火&#x27;</span>,<span class="string">&#x27;水&#x27;</span>,<span class="string">&#x27;木&#x27;</span>,<span class="string">&#x27;金&#x27;</span>,<span class="string">&#x27;土&#x27;</span>);</span><br><span class="line">  <span class="variable">$yd</span> = <span class="variable">$youbi</span>[<span class="title function_ invoke__">gmdate</span>(<span class="string">&quot;w&quot;</span>, <span class="variable">$time</span>+<span class="number">9</span>*<span class="number">60</span>*<span class="number">60</span>)] ;</span><br><span class="line">  <span class="variable">$now</span> = (</span><br><span class="line">    <span class="title function_ invoke__">gmdate</span>(<span class="string">&quot;y/m/d&quot;</span>,<span class="variable">$time</span>+<span class="number">9</span>*<span class="number">60</span>*<span class="number">60</span>) . </span><br><span class="line">    <span class="string">&quot;(&quot;</span> .(<span class="keyword">string</span>)<span class="variable">$yd</span> . <span class="string">&quot;)&quot;</span> . </span><br><span class="line">    <span class="title function_ invoke__">gmdate</span>(<span class="string">&quot;H:i&quot;</span>,<span class="variable">$time</span>+<span class="number">9</span>*<span class="number">60</span>*<span class="number">60</span>)</span><br><span class="line">  );</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span>(DISP_ID)&#123;</span><br><span class="line">    <span class="keyword">if</span>(<span class="variable">$email</span>&amp;&amp;DISP_ID==<span class="number">1</span>)&#123;</span><br><span class="line">      <span class="variable">$now</span> .= <span class="string">&quot; ID:???&quot;</span>;</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">      <span class="variable">$now</span>.=<span class="string">&quot; ID:&quot;</span>.<span class="title function_ invoke__">substr</span>(<span class="title function_ invoke__">crypt</span>(<span class="title function_ invoke__">md5</span>(<span class="variable">$_SERVER</span>[<span class="string">&quot;REMOTE_ADDR&quot;</span>].IDSEED.<span class="title function_ invoke__">gmdate</span>(<span class="string">&quot;Ymd&quot;</span>, <span class="variable">$time</span>+<span class="number">9</span>*<span class="number">60</span>*<span class="number">60</span>)),<span class="string">&#x27;id&#x27;</span>),-<span class="number">8</span>);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+<p>从这里我们可以得知id生成的规则</p>
+<p>再加上提示中说ip的前面部分是219</p>
+<p>写脚本来解密(by stypr)</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span>(<span class="variable">$i</span>=<span class="number">0</span>;<span class="variable">$i</span>&lt;<span class="number">256</span>;<span class="variable">$i</span>++)&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="variable">$j</span>=<span class="number">0</span>;<span class="variable">$j</span>&lt;<span class="number">256</span>;<span class="variable">$j</span>++)&#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="variable">$k</span>=<span class="number">0</span>;<span class="variable">$k</span>&lt;<span class="number">256</span>;<span class="variable">$k</span>++)&#123;</span><br><span class="line">            <span class="variable">$actual</span> = <span class="string">&quot;219.&quot;</span>.<span class="variable">$i</span>.<span class="string">&quot;.&quot;</span>.<span class="variable">$j</span>.<span class="string">&quot;.&quot;</span>.<span class="variable">$k</span>.<span class="string">&quot;idの種&quot;</span>. <span class="string">&quot;20211203&quot;</span>;</span><br><span class="line">            <span class="variable">$val</span> = <span class="title function_ invoke__">substr</span>(<span class="title function_ invoke__">crypt</span>(<span class="title function_ invoke__">md5</span>(<span class="variable">$actual</span>), <span class="string">&quot;id&quot;</span>), -<span class="number">8</span>);</span><br><span class="line">            <span class="keyword">if</span>(<span class="variable">$val</span> == <span class="string">&quot;ueyUrcwA&quot;</span>)&#123;</span><br><span class="line">                <span class="keyword">echo</span> <span class="variable">$actual</span>;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>跑出对应的ip</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ php a.php</span><br><span class="line">219.91.64.47idの種20211203</span><br></pre></td></tr></table></figure>
+
+<p>flag:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hitcon&#123;219.91.64.47&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="baba-is-misc"><a href="#baba-is-misc" class="headerlink" title="baba is misc:"></a>baba is misc:</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">BABA IS MISC</span><br><span class="line">MISC HAS FLAG</span><br><span class="line">FLAG HAS WORD AND SPACE</span><br><span class="line">FLAG IS WIN</span><br><span class="line">baba_is_misc-b6a43cc8b24d3cc1592077f68d5089c0491b6021.bin</span><br><span class="line">Author: ddaa</span><br><span class="line"></span><br><span class="line">hint:</span><br><span class="line">The flag prefix `hitcon&#123;` is lower case. The other words in flag content are uppercase.</span><br></pre></td></tr></table></figure>
+
+<p>下载下来发现是个pfs0文件 挂载后发现是一个baba is you的游戏</p>
+<p>用<a href="https://github.com/jakcron/nstool">https://github.com/jakcron/nstool</a> 进行分离 分离出program.nca的主程序</p>
+<p>再使用<a href="https://github.com/SciresM/hactool">https://github.com/SciresM/hactool</a> 分离相关的文件 可以分离出相关的配置与Lua文件</p>
+<p>然后发现大部分是原始的游戏资源,但是玩通关也没有flag</p>
+<p>第0关的标题是 <code>find all flag in maps</code></p>
+<p><img src="https://i.imgur.com/bGQlHnB.png"></p>
+<p>且同时告诉了我们第一部分flag的信息是<code>hitcon&#123;</code></p>
+<p><img src="https://i.imgur.com/jXs9Wdz.png"></p>
+<p>之后通过下载steam上原始的baba is you文件 然后与题目的资源进行diff</p>
+<p>发现level<code>0 17 21 80 82 101 111 130 176</code>的地图与之前存在改变</p>
+<p>这就意味着这些地图内可能存在的相关flag的信息</p>
+<p>使用<a href="https://github.com/ShootMe/BabaIsYouEditor">https://github.com/ShootMe/BabaIsYouEditor</a> 解析地图</p>
+<p>level0: <code>hitcon&#123;</code></p>
+<p><img src="https://i.imgur.com/8BJ7q4w.png"></p>
+<p>level17: <code>BABA IS YOU</code></p>
+<p><img src="https://i.imgur.com/GLMF2jt.png"></p>
+<p>level21: <code>IS A</code></p>
+<p><img src="https://i.imgur.com/yUpGsKs.png"></p>
+<p>level80: <code>GOOD</code></p>
+<p><img src="https://i.imgur.com/YKRWI7S.png"></p>
+<p>level82: <code>GAME</code></p>
+<p><img src="https://i.imgur.com/yd9Qpjb.png"></p>
+<p>level101:<code>BUT</code></p>
+<p><img src="https://i.imgur.com/WhqqcXl.png"></p>
+<p>level111: <code>TOO</code></p>
+<p><img src="https://i.imgur.com/CTk53f1.png"></p>
+<p>level130: <code>DIFFICULT</code></p>
+<p><img src="https://i.imgur.com/9sQocr4.png"></p>
+<p>level176: <code>!!!!!!&#125;</code></p>
+<p><img src="https://i.imgur.com/OW5nxZL.png"></p>
+<p>当然这当时的!是猜出来 后来看discord上讨论需要安装最新的游戏扩展</p>
+<p><img src="https://i.imgur.com/NoiaeDC.png"></p>
+<p>看来我运气还是不错</p>
+<p>最后总结得到</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">000 -&gt; hitcon&#123;</span><br><span class="line">017 -&gt; BABA IS OOU</span><br><span class="line">021 -&gt; IS A</span><br><span class="line">080 -&gt; GOOD</span><br><span class="line">082 -&gt; GAME</span><br><span class="line">101 -&gt; BUT</span><br><span class="line">111 -&gt; TOO</span><br><span class="line">130 -&gt; DIFFICULT</span><br><span class="line">176 -&gt; !!!!!!!&#125;</span><br></pre></td></tr></table></figure>
+
+<p>flag:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hitcon&#123;BABA IS YOU IS A GOOD GAME BUT TOO DIFFICULT !!!!!!&#125;</span><br></pre></td></tr></table></figure>
+
+
+]]></content>
+      <categories>
+        <category>Writeup</category>
+      </categories>
+      <tags>
+        <tag>Misc</tag>
+        <tag>CTF</tag>
+        <tag>BABA IS YOU</tag>
+        <tag>PHP</tag>
       </tags>
   </entry>
   <entry>
@@ -201,9 +201,9 @@
         <category>Writeup</category>
       </categories>
       <tags>
+        <tag>Forensics</tag>
         <tag>Misc</tag>
         <tag>CTF</tag>
-        <tag>Forensics</tag>
         <tag>Windows</tag>
         <tag>Kerberos Protocol</tag>
       </tags>
@@ -252,9 +252,9 @@
         <category>Writeup</category>
       </categories>
       <tags>
+        <tag>Forensics</tag>
         <tag>Misc</tag>
         <tag>CTF</tag>
-        <tag>Forensics</tag>
         <tag>Android</tag>
         <tag>BMC-Cache</tag>
       </tags>
@@ -478,9 +478,9 @@
         <category>Writeup</category>
       </categories>
       <tags>
+        <tag>Forensics</tag>
         <tag>Misc</tag>
         <tag>CTF</tag>
-        <tag>Forensics</tag>
         <tag>Windows</tag>
         <tag>BMC-Cache</tag>
         <tag>PowerShell</tag>

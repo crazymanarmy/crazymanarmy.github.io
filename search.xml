@@ -2,7 +2,7 @@
 <search>
   <entry>
     <title>ASIS CTF 2021 Misc Writeup</title>
-    <url>/2023/01/26/ASIS-CTF-2021-Misc-Writeup/</url>
+    <url>/2021/10/26/ASIS-CTF-2021-Misc-Writeup/</url>
     <content><![CDATA[<h1 id="ASIS-CTF-2021-Misc-Writeup"><a href="#ASIS-CTF-2021-Misc-Writeup" class="headerlink" title="ASIS CTF 2021 Misc Writeup"></a>ASIS CTF 2021 Misc Writeup</h1><h2 id="challenge-Factory"><a href="#challenge-Factory" class="headerlink" title="challenge-Factory:"></a>challenge-Factory:</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">In the simplest terms, factory misco-graphy is the ratio of output to input!</span><br></pre></td></tr></table></figure>
 
 <p>It is an easy stego challenge.Use foremost to solve it</p>
@@ -92,7 +92,7 @@
   </entry>
   <entry>
     <title>HITCON 2021 Misc Writeup</title>
-    <url>/2023/01/26/HITCON-2021-Misc-Writeup/</url>
+    <url>/2021/12/08/HITCON-2021-Misc-Writeup/</url>
     <content><![CDATA[<h1 id="HITCON-2021-Misc-Writeup"><a href="#HITCON-2021-Misc-Writeup" class="headerlink" title="HITCON 2021 Misc Writeup"></a>HITCON 2021 Misc Writeup</h1><h2 id="FBI-WARNING-orange"><a href="#FBI-WARNING-orange" class="headerlink" title="FBI WARNING(orange)"></a>FBI WARNING(orange)</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Please help FBI to arrest Ωrange!</span><br><span class="line">(Flag format: hitcon&#123;&lt;ip-address-of-Ωrange&gt;&#125;)</span><br><span class="line">(Hint: The prefix of the IP address is 219)</span><br><span class="line">http://3.112.91.135/</span><br><span class="line">Author: orange</span><br></pre></td></tr></table></figure>
 
 <p>网站如下:</p>
@@ -172,7 +172,7 @@
   </entry>
   <entry>
     <title>Insomni’hack teaser 2023 - Autopsy</title>
-    <url>/2023/01/26/Insomni%E2%80%99hack-teaser-2023-Autopsy/</url>
+    <url>/2023/01/23/Insomni%E2%80%99hack-teaser-2023-Autopsy/</url>
     <content><![CDATA[<h1 id="Insomni’hack-teaser-2023-Autopsy"><a href="#Insomni’hack-teaser-2023-Autopsy" class="headerlink" title="Insomni’hack teaser 2023 - Autopsy:"></a>Insomni’hack teaser 2023 - Autopsy:</h1><p>In the Lunar New Year, I played Insomni’hack teaser 2023, one of the topics labeled forensics, realistic, windows aroused my interest, I solved him. And I learned some knowledge from it. This is the record writeup</p>
 <h2 id="Autopsy"><a href="#Autopsy" class="headerlink" title="Autopsy:"></a>Autopsy:</h2><p>Wireshark loads through the export object and selects http, save all and then filters to get three files <code>SYSTEM</code>, <code>SECURITY</code>, <code>ntds.dit</code></p>
 <p><img src="https://i.imgur.com/K9BHIYn.png"></p>
@@ -209,7 +209,7 @@
   </entry>
   <entry>
     <title>Writeup of Flag Thief in WMCTF 2021</title>
-    <url>/2023/01/26/Writeup-of-Flag-Thief-in-WMCTF-2021/</url>
+    <url>/2021/08/30/Writeup-of-Flag-Thief-in-WMCTF-2021/</url>
     <content><![CDATA[<h1 id="Writeup-of-Flag-Thief-in-WMCTF-2021"><a href="#Writeup-of-Flag-Thief-in-WMCTF-2021" class="headerlink" title="Writeup of Flag Thief in WMCTF 2021"></a>Writeup of Flag Thief in WMCTF 2021</h1><h2 id="preface"><a href="#preface" class="headerlink" title="preface:"></a>preface:</h2><p>在两天前的WMCTF2021中我和th31nk共同解决了一个名为Flag Thief的取证挑战并且获得了该题目类型的一血</p>
 <p><img src="https://i.imgur.com/DmO64JG.png" alt="first blood"></p>
 <h2 id="description"><a href="#description" class="headerlink" title="description:"></a>description:</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">2021年8月28日 01:00 UTC，著名Flag大盗L1near被缉拿归案。警方已经将其作案用的电脑制作成镜像，他们试图找到L1near藏匿在其中的Flag但都以失败告终。警方知道你是取证专业人士，现在需要你的帮助！</span><br><span class="line"></span><br><span class="line">On August 28, 2021, at 01:00 UTC, The famous Flag thief L1near was arrested. Police have made a mirror image of the computer he used to commit the crime, and they have tried unsuccessfully to find the Flag that L1near was hiding inside. The police know you&#x27;re a forensics professional, now they need your help!</span><br><span class="line"></span><br><span class="line">Attachment: Baidu Drive(Code:m8yx) Or Google Drive</span><br><span class="line"></span><br><span class="line">the 7z&#x27;s passowrd is ec19b53ce10adc41be119713ffe34760</span><br><span class="line"></span><br><span class="line">Flag Thief hint1：经过警方长达一天的审讯，L1near交代他曾经对受害人的电脑远程操控过</span><br></pre></td></tr></table></figure>
@@ -260,7 +260,7 @@
   </entry>
   <entry>
     <title>idek 2022* CTF Pyjail &amp;&amp; Pyjail Revenge Writeup</title>
-    <url>/2023/01/26/idek-2022-CTF-Pyjail-Pyjail-Revenge-Writeup/</url>
+    <url>/2023/01/18/idek-2022-CTF-Pyjail-Pyjail-Revenge-Writeup/</url>
     <content><![CDATA[<h1 id="idek-2022-CTF-Pyjail-amp-amp-Pyjail-Revenge-Writeup"><a href="#idek-2022-CTF-Pyjail-amp-amp-Pyjail-Revenge-Writeup" class="headerlink" title="idek 2022* CTF Pyjail &amp;&amp; Pyjail Revenge Writeup"></a>idek 2022* CTF Pyjail &amp;&amp; Pyjail Revenge Writeup</h1><h2 id="Pyjail"><a href="#Pyjail" class="headerlink" title="Pyjail:"></a>Pyjail:</h2><p>The code looks like this</p>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line">blocklist = [<span class="string">&#x27;.&#x27;</span>, <span class="string">&#x27;\\&#x27;</span>, <span class="string">&#x27;[&#x27;</span>, <span class="string">&#x27;]&#x27;</span>, <span class="string">&#x27;&#123;&#x27;</span>, <span class="string">&#x27;&#125;&#x27;</span>,<span class="string">&#x27;:&#x27;</span>]</span><br><span class="line">DISABLE_FUNCTIONS = [<span class="string">&quot;getattr&quot;</span>, <span class="string">&quot;eval&quot;</span>, <span class="string">&quot;exec&quot;</span>, <span class="string">&quot;breakpoint&quot;</span>, <span class="string">&quot;lambda&quot;</span>, <span class="string">&quot;help&quot;</span>]</span><br><span class="line">DISABLE_FUNCTIONS = &#123;func: <span class="literal">None</span> <span class="keyword">for</span> func <span class="keyword">in</span> DISABLE_FUNCTIONS&#125;</span><br></pre></td></tr></table></figure>
 
@@ -339,7 +339,7 @@
   </entry>
   <entry>
     <title>idek CTF 2022* Forensics - HiddenGem Mixtape Writeup</title>
-    <url>/2023/01/26/idek-CTF-2022-Forensics-HiddenGem-Mixtape-Writeup/</url>
+    <url>/2023/01/16/idek-CTF-2022-Forensics-HiddenGem-Mixtape-Writeup/</url>
     <content><![CDATA[<h1 id="idek-CTF-2022-Forensics-HiddenGem-Mixtape-Writeup"><a href="#idek-CTF-2022-Forensics-HiddenGem-Mixtape-Writeup" class="headerlink" title="idek CTF 2022* Forensics - HiddenGem Mixtape Writeup"></a>idek CTF 2022* Forensics - HiddenGem Mixtape Writeup</h1><p>This week is the Preliminary Eve in China, and most of my time is resting and partying. At the same time, there are some good challenges in idek CTF, among which I prefer the HiddenGem Mixtape series of challenges. Since I am a forensics enthusiast, and I I am also a malware analyst. So I prefer this challenge that is close to the realworld. Although some people may feel that this challenge is strange,guessing. Including some designs that may confuse the players. I hope my writeup can let you learn more much.Let’s gooooo</p>
 <p>And a digression: szymex73 so strong! █Bquanman█ so strong!</p>
 <h1 id="HiddenGem-Mixtape"><a href="#HiddenGem-Mixtape" class="headerlink" title="HiddenGem Mixtape:"></a>HiddenGem Mixtape:</h1><p>After downloading the file, we got three files <code>2023-01-07T194857_HiddenGem.zip</code>,<code>Note.txt</code>,<code>HiddenGem.7z</code></p>

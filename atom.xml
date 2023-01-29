@@ -166,9 +166,9 @@
     
     <category term="Windows" scheme="https://crazymanarmy.github.io/tags/Windows/"/>
     
-    <category term="BMC-Cache" scheme="https://crazymanarmy.github.io/tags/BMC-Cache/"/>
-    
     <category term="PowerShell" scheme="https://crazymanarmy.github.io/tags/PowerShell/"/>
+    
+    <category term="BMC-Cache" scheme="https://crazymanarmy.github.io/tags/BMC-Cache/"/>
     
     <category term="EVTX Log Anaylsis" scheme="https://crazymanarmy.github.io/tags/EVTX-Log-Anaylsis/"/>
     

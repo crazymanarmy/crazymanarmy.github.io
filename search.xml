@@ -1,83 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>HITCON 2021 Misc Writeup</title>
-    <url>/2021/12/08/HITCON-2021-Misc-Writeup/</url>
-    <content><![CDATA[<h1 id="HITCON-2021-Misc-Writeup"><a href="#HITCON-2021-Misc-Writeup" class="headerlink" title="HITCON 2021 Misc Writeup"></a>HITCON 2021 Misc Writeup</h1><h2 id="FBI-WARNING-orange"><a href="#FBI-WARNING-orange" class="headerlink" title="FBI WARNING(orange)"></a>FBI WARNING(orange)</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Please help FBI to arrest Ωrange!</span><br><span class="line">(Flag format: hitcon&#123;&lt;ip-address-of-Ωrange&gt;&#125;)</span><br><span class="line">(Hint: The prefix of the IP address is 219)</span><br><span class="line">http://3.112.91.135/</span><br><span class="line">Author: orange</span><br></pre></td></tr></table></figure>
+    <title>ASIS CTF 2021 Misc Writeup</title>
+    <url>/2021/10/26/ASIS-CTF-2021-Misc-Writeup/</url>
+    <content><![CDATA[<h1 id="ASIS-CTF-2021-Misc-Writeup"><a href="#ASIS-CTF-2021-Misc-Writeup" class="headerlink" title="ASIS CTF 2021 Misc Writeup"></a>ASIS CTF 2021 Misc Writeup</h1><h2 id="challenge-Factory"><a href="#challenge-Factory" class="headerlink" title="challenge-Factory:"></a>challenge-Factory:</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">In the simplest terms, factory misco-graphy is the ratio of output to input!</span><br></pre></td></tr></table></figure>
 
-<p>网站如下:</p>
-<p><img src="https://i.imgur.com/RuwxUew.png"></p>
-<p>找了找相关的该网站的相关的源码 找到了</p>
-<p><a href="https://github.com/futoase/futaba-ng/blob/master/app/dest/futaba.php">https://github.com/futoase/futaba-ng/blob/master/app/dest/futaba.php</a></p>
-<p>本题的主要部分</p>
-<p><img src="https://i.imgur.com/aKW9ZNv.png"></p>
-<p>对应的相关代码</p>
-<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="title function_ invoke__">define</span>(<span class="string">&quot;IDSEED&quot;</span>, <span class="string">&#x27;idの種&#x27;</span>);		<span class="comment">//idの種</span></span><br></pre></td></tr></table></figure>
-
-<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="variable">$c_pass</span> = <span class="variable">$pwd</span>;</span><br><span class="line">  <span class="variable">$pass</span> = (<span class="variable">$pwd</span>) ? <span class="title function_ invoke__">substr</span>(<span class="title function_ invoke__">md5</span>(<span class="variable">$pwd</span>),<span class="number">2</span>,<span class="number">8</span>) : <span class="string">&quot;*&quot;</span>;</span><br><span class="line">  <span class="variable">$youbi</span> = <span class="keyword">array</span>(<span class="string">&#x27;日&#x27;</span>,<span class="string">&#x27;月&#x27;</span>,<span class="string">&#x27;火&#x27;</span>,<span class="string">&#x27;水&#x27;</span>,<span class="string">&#x27;木&#x27;</span>,<span class="string">&#x27;金&#x27;</span>,<span class="string">&#x27;土&#x27;</span>);</span><br><span class="line">  <span class="variable">$yd</span> = <span class="variable">$youbi</span>[<span class="title function_ invoke__">gmdate</span>(<span class="string">&quot;w&quot;</span>, <span class="variable">$time</span>+<span class="number">9</span>*<span class="number">60</span>*<span class="number">60</span>)] ;</span><br><span class="line">  <span class="variable">$now</span> = (</span><br><span class="line">    <span class="title function_ invoke__">gmdate</span>(<span class="string">&quot;y/m/d&quot;</span>,<span class="variable">$time</span>+<span class="number">9</span>*<span class="number">60</span>*<span class="number">60</span>) . </span><br><span class="line">    <span class="string">&quot;(&quot;</span> .(<span class="keyword">string</span>)<span class="variable">$yd</span> . <span class="string">&quot;)&quot;</span> . </span><br><span class="line">    <span class="title function_ invoke__">gmdate</span>(<span class="string">&quot;H:i&quot;</span>,<span class="variable">$time</span>+<span class="number">9</span>*<span class="number">60</span>*<span class="number">60</span>)</span><br><span class="line">  );</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span>(DISP_ID)&#123;</span><br><span class="line">    <span class="keyword">if</span>(<span class="variable">$email</span>&amp;&amp;DISP_ID==<span class="number">1</span>)&#123;</span><br><span class="line">      <span class="variable">$now</span> .= <span class="string">&quot; ID:???&quot;</span>;</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">      <span class="variable">$now</span>.=<span class="string">&quot; ID:&quot;</span>.<span class="title function_ invoke__">substr</span>(<span class="title function_ invoke__">crypt</span>(<span class="title function_ invoke__">md5</span>(<span class="variable">$_SERVER</span>[<span class="string">&quot;REMOTE_ADDR&quot;</span>].IDSEED.<span class="title function_ invoke__">gmdate</span>(<span class="string">&quot;Ymd&quot;</span>, <span class="variable">$time</span>+<span class="number">9</span>*<span class="number">60</span>*<span class="number">60</span>)),<span class="string">&#x27;id&#x27;</span>),-<span class="number">8</span>);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
-
-<p>从这里我们可以得知id生成的规则</p>
-<p>再加上提示中说ip的前面部分是219</p>
-<p>写脚本来解密(by stypr)</p>
-<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span>(<span class="variable">$i</span>=<span class="number">0</span>;<span class="variable">$i</span>&lt;<span class="number">256</span>;<span class="variable">$i</span>++)&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="variable">$j</span>=<span class="number">0</span>;<span class="variable">$j</span>&lt;<span class="number">256</span>;<span class="variable">$j</span>++)&#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="variable">$k</span>=<span class="number">0</span>;<span class="variable">$k</span>&lt;<span class="number">256</span>;<span class="variable">$k</span>++)&#123;</span><br><span class="line">            <span class="variable">$actual</span> = <span class="string">&quot;219.&quot;</span>.<span class="variable">$i</span>.<span class="string">&quot;.&quot;</span>.<span class="variable">$j</span>.<span class="string">&quot;.&quot;</span>.<span class="variable">$k</span>.<span class="string">&quot;idの種&quot;</span>. <span class="string">&quot;20211203&quot;</span>;</span><br><span class="line">            <span class="variable">$val</span> = <span class="title function_ invoke__">substr</span>(<span class="title function_ invoke__">crypt</span>(<span class="title function_ invoke__">md5</span>(<span class="variable">$actual</span>), <span class="string">&quot;id&quot;</span>), -<span class="number">8</span>);</span><br><span class="line">            <span class="keyword">if</span>(<span class="variable">$val</span> == <span class="string">&quot;ueyUrcwA&quot;</span>)&#123;</span><br><span class="line">                <span class="keyword">echo</span> <span class="variable">$actual</span>;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>跑出对应的ip</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ php a.php</span><br><span class="line">219.91.64.47idの種20211203</span><br></pre></td></tr></table></figure>
-
+<p>It is an easy stego challenge.Use foremost to solve it</p>
+<p><img src="https://i.imgur.com/UcOiIoI.png"></p>
 <p>flag:</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hitcon&#123;219.91.64.47&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ASIS&#123;PDF_1N_PDF_iZ_A_T4sK_fOR_fOreEnSic5_L0v3RS&#125;</span><br></pre></td></tr></table></figure>
 
-<h2 id="baba-is-misc"><a href="#baba-is-misc" class="headerlink" title="baba is misc:"></a>baba is misc:</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">BABA IS MISC</span><br><span class="line">MISC HAS FLAG</span><br><span class="line">FLAG HAS WORD AND SPACE</span><br><span class="line">FLAG IS WIN</span><br><span class="line">baba_is_misc-b6a43cc8b24d3cc1592077f68d5089c0491b6021.bin</span><br><span class="line">Author: ddaa</span><br><span class="line"></span><br><span class="line">hint:</span><br><span class="line">The flag prefix `hitcon&#123;` is lower case. The other words in flag content are uppercase.</span><br></pre></td></tr></table></figure>
+<h2 id="challenge-Gesture"><a href="#challenge-Gesture" class="headerlink" title="challenge-Gesture:"></a>challenge-Gesture:</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">A gesture is a file that is intended to indicate or emphasize something!</span><br><span class="line"></span><br><span class="line">Note: flag is lowercase string, put the flag in ASIS&#123;flag&#125; too.</span><br></pre></td></tr></table></figure>
 
-<p>下载下来发现是个pfs0文件 挂载后发现是一个baba is you的游戏</p>
-<p>用<a href="https://github.com/jakcron/nstool">https://github.com/jakcron/nstool</a> 进行分离 分离出program.nca的主程序</p>
-<p>再使用<a href="https://github.com/SciresM/hactool">https://github.com/SciresM/hactool</a> 分离相关的文件 可以分离出相关的配置与Lua文件</p>
-<p>然后发现大部分是原始的游戏资源,但是玩通关也没有flag</p>
-<p>第0关的标题是 <code>find all flag in maps</code></p>
-<p><img src="https://i.imgur.com/bGQlHnB.png"></p>
-<p>且同时告诉了我们第一部分flag的信息是<code>hitcon&#123;</code></p>
-<p><img src="https://i.imgur.com/jXs9Wdz.png"></p>
-<p>之后通过下载steam上原始的baba is you文件 然后与题目的资源进行diff</p>
-<p>发现level<code>0 17 21 80 82 101 111 130 176</code>的地图与之前存在改变</p>
-<p>这就意味着这些地图内可能存在的相关flag的信息</p>
-<p>使用<a href="https://github.com/ShootMe/BabaIsYouEditor">https://github.com/ShootMe/BabaIsYouEditor</a> 解析地图</p>
-<p>level0: <code>hitcon&#123;</code></p>
-<p><img src="https://i.imgur.com/8BJ7q4w.png"></p>
-<p>level17: <code>BABA IS YOU</code></p>
-<p><img src="https://i.imgur.com/GLMF2jt.png"></p>
-<p>level21: <code>IS A</code></p>
-<p><img src="https://i.imgur.com/yUpGsKs.png"></p>
-<p>level80: <code>GOOD</code></p>
-<p><img src="https://i.imgur.com/YKRWI7S.png"></p>
-<p>level82: <code>GAME</code></p>
-<p><img src="https://i.imgur.com/yd9Qpjb.png"></p>
-<p>level101:<code>BUT</code></p>
-<p><img src="https://i.imgur.com/WhqqcXl.png"></p>
-<p>level111: <code>TOO</code></p>
-<p><img src="https://i.imgur.com/CTk53f1.png"></p>
-<p>level130: <code>DIFFICULT</code></p>
-<p><img src="https://i.imgur.com/9sQocr4.png"></p>
-<p>level176: <code>!!!!!!&#125;</code></p>
-<p><img src="https://i.imgur.com/OW5nxZL.png"></p>
-<p>当然这当时的!是猜出来 后来看discord上讨论需要安装最新的游戏扩展</p>
-<p><img src="https://i.imgur.com/NoiaeDC.png"></p>
-<p>看来我运气还是不错</p>
-<p>最后总结得到</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">000 -&gt; hitcon&#123;</span><br><span class="line">017 -&gt; BABA IS OOU</span><br><span class="line">021 -&gt; IS A</span><br><span class="line">080 -&gt; GOOD</span><br><span class="line">082 -&gt; GAME</span><br><span class="line">101 -&gt; BUT</span><br><span class="line">111 -&gt; TOO</span><br><span class="line">130 -&gt; DIFFICULT</span><br><span class="line">176 -&gt; !!!!!!!&#125;</span><br></pre></td></tr></table></figure>
+<p>It is an interesting challenge.I can’t solve it in game.This is the recurrence work after the game</p>
+<p>first use <code>file</code> and <code>binwalk</code> to check out this file</p>
+<p>file:</p>
+<p><img src="https://i.imgur.com/rTvwmaB.png"></p>
+<p>binwalk:</p>
+<p><img src="https://i.imgur.com/6ETdj8U.png"></p>
+<p>wow you can find it is <code>YAFFS</code> filesystem,It is a key to extract this img file</p>
+<p>use <a href="https://github.com/justsoso8/yaffs2utils">https://github.com/justsoso8/yaffs2utils</a> to extract it</p>
+<p>such as ./unyaffs2</p>
+<p>command:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo ./unyaffs2 -p 512 /home/crazyman/Desktop/gesture.img Androidtmp</span><br><span class="line"></span><br><span class="line">sudo ./unyaffs2 -p 512 &#123;input_image_path&#125; &#123;output_path&#125;</span><br></pre></td></tr></table></figure>
 
+<p><img src="https://i.imgur.com/2FXgufd.png"></p>
+<p>result:</p>
+<p><img src="https://i.imgur.com/K419Ug9.png"></p>
+<p>wow,we have already extract them,Now it’s time for us to analyze them</p>
+<p>and we can find someting in <code>Android/data/com.android.gallery3d/cache/.nomedia/.latentorism</code></p>
+<p>As you know,cache is important in forensics.Meanwhile it is also the cache of gallery. So It is an picture.</p>
+<p>rename it as png </p>
+<p><img src="https://i.imgur.com/VpgnQB9.png"></p>
+<p>we can see some number on it :D</p>
+<p>but it looks strange.</p>
+<p>aha This is the image that has been flipped left and right</p>
+<p>Now repair it</p>
+<p>script:</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> cv2</span><br><span class="line">image = cv2.imread(<span class="string">&quot;latentorism.png&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Flipped Horizontally</span></span><br><span class="line">h_flip = cv2.flip(image, <span class="number">1</span>)</span><br><span class="line">cv2.imwrite(<span class="string">&quot;latentorism-h.png&quot;</span>, h_flip)</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://i.imgur.com/9ZZDARS.png"></p>
+<p>now we got <code>709004999298182874947842717955</code> but it seems not hex.What use are they for?</p>
+<p>Don’t be worry,we will find another data.</p>
+<p>look at <code>Signal\Backups\</code></p>
+<p>it has signal-2021-10-21-08-01-13.backup</p>
+<p>what’s it ? how to decode it?</p>
+<p>google is a good way to solve these :D</p>
+<p><img src="https://i.imgur.com/2s1VIew.png"></p>
+<p>then,you can find it </p>
+<p><a href="https://github.com/pajowu/signal-backup-decode">https://github.com/pajowu/signal-backup-decode</a></p>
+<p>install it and run the command to decode signal file</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">signal-backup-decode -p 709004999298182874947842717955 signal-2021-10-21-08-01-13.backup</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://i.imgur.com/KbXGVVA.png"></p>
+<p>file list:</p>
+<p><img src="https://i.imgur.com/NXcBpOj.png"></p>
+<p>now we will parse the signal_backup.db file</p>
+<p>use SQLite Viewer to analyze the data </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SELECT * FROM sms;</span><br></pre></td></tr></table></figure>
+
+<p>we can find morse code :D</p>
+<p><img src="https://i.imgur.com/3n6NtsK.png"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">-. ...-- ...- . .-. ..--.- --... .-. ..- ..... - ..--.- - .---- -. . ..--.- ... . ...-- ..--.- .. ..--.- ....- ..--.- -. ----- - .... .---- -. -.... ..--.- .. ..... ..--.- .-.. ----- ----- ..--.- .--. ...-- .-. -.-. . -. --... ..--.- ... ...-- -.-. ..- .-. .</span><br></pre></td></tr></table></figure>
+
+<p>decode morse</p>
+<p>use <a href="http://www.hiencode.com/morse.html">http://www.hiencode.com/morse.html</a></p>
+<p><img src="https://i.imgur.com/APM6bcW.png"></p>
 <p>flag:</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hitcon&#123;BABA IS YOU IS A GOOD GAME BUT TOO DIFFICULT !!!!!!&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ASIS&#123;n3ver_7ru5t_t1ne_se3_i_4_n0th1n6_i5_l00_p3rcen7_s3cure&#125;</span><br></pre></td></tr></table></figure>
 
 
+<p>Knowlege:</p>
+<ol>
+<li>extract YAFFS filesystem</li>
+<li>gallery image cache</li>
+<li>decode android signal backup</li>
+<li>parse and analyze data </li>
+</ol>
+<p>Thanks for ASIS CTF.Nice challenge</p>
 ]]></content>
       <categories>
         <category>Writeup</category>
       </categories>
       <tags>
+        <tag>Forensics</tag>
         <tag>Misc</tag>
         <tag>CTF</tag>
-        <tag>BABA IS YOU</tag>
-        <tag>PHP</tag>
+        <tag>YAFFS</tag>
+        <tag>Android</tag>
       </tags>
   </entry>
   <entry>
@@ -176,9 +186,9 @@
         <category>Writeup</category>
       </categories>
       <tags>
+        <tag>Forensics</tag>
         <tag>Misc</tag>
         <tag>CTF</tag>
-        <tag>Forensics</tag>
         <tag>Sysdig</tag>
         <tag>ISAKMP Protocol</tag>
         <tag>ESP Protocol</tag>
@@ -281,102 +291,12 @@
         <category>Writeup</category>
       </categories>
       <tags>
+        <tag>Forensics</tag>
         <tag>Misc</tag>
         <tag>CTF</tag>
-        <tag>Forensics</tag>
         <tag>Sysdig</tag>
         <tag>ISAKMP Protocol</tag>
         <tag>ESP Protocol</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>ASIS CTF 2021 Misc Writeup</title>
-    <url>/2021/10/26/ASIS-CTF-2021-Misc-Writeup/</url>
-    <content><![CDATA[<h1 id="ASIS-CTF-2021-Misc-Writeup"><a href="#ASIS-CTF-2021-Misc-Writeup" class="headerlink" title="ASIS CTF 2021 Misc Writeup"></a>ASIS CTF 2021 Misc Writeup</h1><h2 id="challenge-Factory"><a href="#challenge-Factory" class="headerlink" title="challenge-Factory:"></a>challenge-Factory:</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">In the simplest terms, factory misco-graphy is the ratio of output to input!</span><br></pre></td></tr></table></figure>
-
-<p>It is an easy stego challenge.Use foremost to solve it</p>
-<p><img src="https://i.imgur.com/UcOiIoI.png"></p>
-<p>flag:</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ASIS&#123;PDF_1N_PDF_iZ_A_T4sK_fOR_fOreEnSic5_L0v3RS&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="challenge-Gesture"><a href="#challenge-Gesture" class="headerlink" title="challenge-Gesture:"></a>challenge-Gesture:</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">A gesture is a file that is intended to indicate or emphasize something!</span><br><span class="line"></span><br><span class="line">Note: flag is lowercase string, put the flag in ASIS&#123;flag&#125; too.</span><br></pre></td></tr></table></figure>
-
-<p>It is an interesting challenge.I can’t solve it in game.This is the recurrence work after the game</p>
-<p>first use <code>file</code> and <code>binwalk</code> to check out this file</p>
-<p>file:</p>
-<p><img src="https://i.imgur.com/rTvwmaB.png"></p>
-<p>binwalk:</p>
-<p><img src="https://i.imgur.com/6ETdj8U.png"></p>
-<p>wow you can find it is <code>YAFFS</code> filesystem,It is a key to extract this img file</p>
-<p>use <a href="https://github.com/justsoso8/yaffs2utils">https://github.com/justsoso8/yaffs2utils</a> to extract it</p>
-<p>such as ./unyaffs2</p>
-<p>command:</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo ./unyaffs2 -p 512 /home/crazyman/Desktop/gesture.img Androidtmp</span><br><span class="line"></span><br><span class="line">sudo ./unyaffs2 -p 512 &#123;input_image_path&#125; &#123;output_path&#125;</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://i.imgur.com/2FXgufd.png"></p>
-<p>result:</p>
-<p><img src="https://i.imgur.com/K419Ug9.png"></p>
-<p>wow,we have already extract them,Now it’s time for us to analyze them</p>
-<p>and we can find someting in <code>Android/data/com.android.gallery3d/cache/.nomedia/.latentorism</code></p>
-<p>As you know,cache is important in forensics.Meanwhile it is also the cache of gallery. So It is an picture.</p>
-<p>rename it as png </p>
-<p><img src="https://i.imgur.com/VpgnQB9.png"></p>
-<p>we can see some number on it :D</p>
-<p>but it looks strange.</p>
-<p>aha This is the image that has been flipped left and right</p>
-<p>Now repair it</p>
-<p>script:</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> cv2</span><br><span class="line">image = cv2.imread(<span class="string">&quot;latentorism.png&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Flipped Horizontally</span></span><br><span class="line">h_flip = cv2.flip(image, <span class="number">1</span>)</span><br><span class="line">cv2.imwrite(<span class="string">&quot;latentorism-h.png&quot;</span>, h_flip)</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://i.imgur.com/9ZZDARS.png"></p>
-<p>now we got <code>709004999298182874947842717955</code> but it seems not hex.What use are they for?</p>
-<p>Don’t be worry,we will find another data.</p>
-<p>look at <code>Signal\Backups\</code></p>
-<p>it has signal-2021-10-21-08-01-13.backup</p>
-<p>what’s it ? how to decode it?</p>
-<p>google is a good way to solve these :D</p>
-<p><img src="https://i.imgur.com/2s1VIew.png"></p>
-<p>then,you can find it </p>
-<p><a href="https://github.com/pajowu/signal-backup-decode">https://github.com/pajowu/signal-backup-decode</a></p>
-<p>install it and run the command to decode signal file</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">signal-backup-decode -p 709004999298182874947842717955 signal-2021-10-21-08-01-13.backup</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://i.imgur.com/KbXGVVA.png"></p>
-<p>file list:</p>
-<p><img src="https://i.imgur.com/NXcBpOj.png"></p>
-<p>now we will parse the signal_backup.db file</p>
-<p>use SQLite Viewer to analyze the data </p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SELECT * FROM sms;</span><br></pre></td></tr></table></figure>
-
-<p>we can find morse code :D</p>
-<p><img src="https://i.imgur.com/3n6NtsK.png"></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">-. ...-- ...- . .-. ..--.- --... .-. ..- ..... - ..--.- - .---- -. . ..--.- ... . ...-- ..--.- .. ..--.- ....- ..--.- -. ----- - .... .---- -. -.... ..--.- .. ..... ..--.- .-.. ----- ----- ..--.- .--. ...-- .-. -.-. . -. --... ..--.- ... ...-- -.-. ..- .-. .</span><br></pre></td></tr></table></figure>
-
-<p>decode morse</p>
-<p>use <a href="http://www.hiencode.com/morse.html">http://www.hiencode.com/morse.html</a></p>
-<p><img src="https://i.imgur.com/APM6bcW.png"></p>
-<p>flag:</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ASIS&#123;n3ver_7ru5t_t1ne_se3_i_4_n0th1n6_i5_l00_p3rcen7_s3cure&#125;</span><br></pre></td></tr></table></figure>
-
-
-<p>Knowlege:</p>
-<ol>
-<li>extract YAFFS filesystem</li>
-<li>gallery image cache</li>
-<li>decode android signal backup</li>
-<li>parse and analyze data </li>
-</ol>
-<p>Thanks for ASIS CTF.Nice challenge</p>
-]]></content>
-      <categories>
-        <category>Writeup</category>
-      </categories>
-      <tags>
-        <tag>Misc</tag>
-        <tag>CTF</tag>
-        <tag>Forensics</tag>
-        <tag>YAFFS</tag>
-        <tag>Android</tag>
       </tags>
   </entry>
   <entry>
@@ -410,11 +330,91 @@
         <category>Writeup</category>
       </categories>
       <tags>
+        <tag>Forensics</tag>
         <tag>Misc</tag>
         <tag>CTF</tag>
-        <tag>Forensics</tag>
         <tag>Windows</tag>
         <tag>Kerberos Protocol</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>HITCON 2021 Misc Writeup</title>
+    <url>/2021/12/08/HITCON-2021-Misc-Writeup/</url>
+    <content><![CDATA[<h1 id="HITCON-2021-Misc-Writeup"><a href="#HITCON-2021-Misc-Writeup" class="headerlink" title="HITCON 2021 Misc Writeup"></a>HITCON 2021 Misc Writeup</h1><h2 id="FBI-WARNING-orange"><a href="#FBI-WARNING-orange" class="headerlink" title="FBI WARNING(orange)"></a>FBI WARNING(orange)</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Please help FBI to arrest Ωrange!</span><br><span class="line">(Flag format: hitcon&#123;&lt;ip-address-of-Ωrange&gt;&#125;)</span><br><span class="line">(Hint: The prefix of the IP address is 219)</span><br><span class="line">http://3.112.91.135/</span><br><span class="line">Author: orange</span><br></pre></td></tr></table></figure>
+
+<p>网站如下:</p>
+<p><img src="https://i.imgur.com/RuwxUew.png"></p>
+<p>找了找相关的该网站的相关的源码 找到了</p>
+<p><a href="https://github.com/futoase/futaba-ng/blob/master/app/dest/futaba.php">https://github.com/futoase/futaba-ng/blob/master/app/dest/futaba.php</a></p>
+<p>本题的主要部分</p>
+<p><img src="https://i.imgur.com/aKW9ZNv.png"></p>
+<p>对应的相关代码</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="title function_ invoke__">define</span>(<span class="string">&quot;IDSEED&quot;</span>, <span class="string">&#x27;idの種&#x27;</span>);		<span class="comment">//idの種</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="variable">$c_pass</span> = <span class="variable">$pwd</span>;</span><br><span class="line">  <span class="variable">$pass</span> = (<span class="variable">$pwd</span>) ? <span class="title function_ invoke__">substr</span>(<span class="title function_ invoke__">md5</span>(<span class="variable">$pwd</span>),<span class="number">2</span>,<span class="number">8</span>) : <span class="string">&quot;*&quot;</span>;</span><br><span class="line">  <span class="variable">$youbi</span> = <span class="keyword">array</span>(<span class="string">&#x27;日&#x27;</span>,<span class="string">&#x27;月&#x27;</span>,<span class="string">&#x27;火&#x27;</span>,<span class="string">&#x27;水&#x27;</span>,<span class="string">&#x27;木&#x27;</span>,<span class="string">&#x27;金&#x27;</span>,<span class="string">&#x27;土&#x27;</span>);</span><br><span class="line">  <span class="variable">$yd</span> = <span class="variable">$youbi</span>[<span class="title function_ invoke__">gmdate</span>(<span class="string">&quot;w&quot;</span>, <span class="variable">$time</span>+<span class="number">9</span>*<span class="number">60</span>*<span class="number">60</span>)] ;</span><br><span class="line">  <span class="variable">$now</span> = (</span><br><span class="line">    <span class="title function_ invoke__">gmdate</span>(<span class="string">&quot;y/m/d&quot;</span>,<span class="variable">$time</span>+<span class="number">9</span>*<span class="number">60</span>*<span class="number">60</span>) . </span><br><span class="line">    <span class="string">&quot;(&quot;</span> .(<span class="keyword">string</span>)<span class="variable">$yd</span> . <span class="string">&quot;)&quot;</span> . </span><br><span class="line">    <span class="title function_ invoke__">gmdate</span>(<span class="string">&quot;H:i&quot;</span>,<span class="variable">$time</span>+<span class="number">9</span>*<span class="number">60</span>*<span class="number">60</span>)</span><br><span class="line">  );</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span>(DISP_ID)&#123;</span><br><span class="line">    <span class="keyword">if</span>(<span class="variable">$email</span>&amp;&amp;DISP_ID==<span class="number">1</span>)&#123;</span><br><span class="line">      <span class="variable">$now</span> .= <span class="string">&quot; ID:???&quot;</span>;</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">      <span class="variable">$now</span>.=<span class="string">&quot; ID:&quot;</span>.<span class="title function_ invoke__">substr</span>(<span class="title function_ invoke__">crypt</span>(<span class="title function_ invoke__">md5</span>(<span class="variable">$_SERVER</span>[<span class="string">&quot;REMOTE_ADDR&quot;</span>].IDSEED.<span class="title function_ invoke__">gmdate</span>(<span class="string">&quot;Ymd&quot;</span>, <span class="variable">$time</span>+<span class="number">9</span>*<span class="number">60</span>*<span class="number">60</span>)),<span class="string">&#x27;id&#x27;</span>),-<span class="number">8</span>);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+<p>从这里我们可以得知id生成的规则</p>
+<p>再加上提示中说ip的前面部分是219</p>
+<p>写脚本来解密(by stypr)</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span>(<span class="variable">$i</span>=<span class="number">0</span>;<span class="variable">$i</span>&lt;<span class="number">256</span>;<span class="variable">$i</span>++)&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="variable">$j</span>=<span class="number">0</span>;<span class="variable">$j</span>&lt;<span class="number">256</span>;<span class="variable">$j</span>++)&#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="variable">$k</span>=<span class="number">0</span>;<span class="variable">$k</span>&lt;<span class="number">256</span>;<span class="variable">$k</span>++)&#123;</span><br><span class="line">            <span class="variable">$actual</span> = <span class="string">&quot;219.&quot;</span>.<span class="variable">$i</span>.<span class="string">&quot;.&quot;</span>.<span class="variable">$j</span>.<span class="string">&quot;.&quot;</span>.<span class="variable">$k</span>.<span class="string">&quot;idの種&quot;</span>. <span class="string">&quot;20211203&quot;</span>;</span><br><span class="line">            <span class="variable">$val</span> = <span class="title function_ invoke__">substr</span>(<span class="title function_ invoke__">crypt</span>(<span class="title function_ invoke__">md5</span>(<span class="variable">$actual</span>), <span class="string">&quot;id&quot;</span>), -<span class="number">8</span>);</span><br><span class="line">            <span class="keyword">if</span>(<span class="variable">$val</span> == <span class="string">&quot;ueyUrcwA&quot;</span>)&#123;</span><br><span class="line">                <span class="keyword">echo</span> <span class="variable">$actual</span>;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>跑出对应的ip</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ php a.php</span><br><span class="line">219.91.64.47idの種20211203</span><br></pre></td></tr></table></figure>
+
+<p>flag:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hitcon&#123;219.91.64.47&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="baba-is-misc"><a href="#baba-is-misc" class="headerlink" title="baba is misc:"></a>baba is misc:</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">BABA IS MISC</span><br><span class="line">MISC HAS FLAG</span><br><span class="line">FLAG HAS WORD AND SPACE</span><br><span class="line">FLAG IS WIN</span><br><span class="line">baba_is_misc-b6a43cc8b24d3cc1592077f68d5089c0491b6021.bin</span><br><span class="line">Author: ddaa</span><br><span class="line"></span><br><span class="line">hint:</span><br><span class="line">The flag prefix `hitcon&#123;` is lower case. The other words in flag content are uppercase.</span><br></pre></td></tr></table></figure>
+
+<p>下载下来发现是个pfs0文件 挂载后发现是一个baba is you的游戏</p>
+<p>用<a href="https://github.com/jakcron/nstool">https://github.com/jakcron/nstool</a> 进行分离 分离出program.nca的主程序</p>
+<p>再使用<a href="https://github.com/SciresM/hactool">https://github.com/SciresM/hactool</a> 分离相关的文件 可以分离出相关的配置与Lua文件</p>
+<p>然后发现大部分是原始的游戏资源,但是玩通关也没有flag</p>
+<p>第0关的标题是 <code>find all flag in maps</code></p>
+<p><img src="https://i.imgur.com/bGQlHnB.png"></p>
+<p>且同时告诉了我们第一部分flag的信息是<code>hitcon&#123;</code></p>
+<p><img src="https://i.imgur.com/jXs9Wdz.png"></p>
+<p>之后通过下载steam上原始的baba is you文件 然后与题目的资源进行diff</p>
+<p>发现level<code>0 17 21 80 82 101 111 130 176</code>的地图与之前存在改变</p>
+<p>这就意味着这些地图内可能存在的相关flag的信息</p>
+<p>使用<a href="https://github.com/ShootMe/BabaIsYouEditor">https://github.com/ShootMe/BabaIsYouEditor</a> 解析地图</p>
+<p>level0: <code>hitcon&#123;</code></p>
+<p><img src="https://i.imgur.com/8BJ7q4w.png"></p>
+<p>level17: <code>BABA IS YOU</code></p>
+<p><img src="https://i.imgur.com/GLMF2jt.png"></p>
+<p>level21: <code>IS A</code></p>
+<p><img src="https://i.imgur.com/yUpGsKs.png"></p>
+<p>level80: <code>GOOD</code></p>
+<p><img src="https://i.imgur.com/YKRWI7S.png"></p>
+<p>level82: <code>GAME</code></p>
+<p><img src="https://i.imgur.com/yd9Qpjb.png"></p>
+<p>level101:<code>BUT</code></p>
+<p><img src="https://i.imgur.com/WhqqcXl.png"></p>
+<p>level111: <code>TOO</code></p>
+<p><img src="https://i.imgur.com/CTk53f1.png"></p>
+<p>level130: <code>DIFFICULT</code></p>
+<p><img src="https://i.imgur.com/9sQocr4.png"></p>
+<p>level176: <code>!!!!!!&#125;</code></p>
+<p><img src="https://i.imgur.com/OW5nxZL.png"></p>
+<p>当然这当时的!是猜出来 后来看discord上讨论需要安装最新的游戏扩展</p>
+<p><img src="https://i.imgur.com/NoiaeDC.png"></p>
+<p>看来我运气还是不错</p>
+<p>最后总结得到</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">000 -&gt; hitcon&#123;</span><br><span class="line">017 -&gt; BABA IS OOU</span><br><span class="line">021 -&gt; IS A</span><br><span class="line">080 -&gt; GOOD</span><br><span class="line">082 -&gt; GAME</span><br><span class="line">101 -&gt; BUT</span><br><span class="line">111 -&gt; TOO</span><br><span class="line">130 -&gt; DIFFICULT</span><br><span class="line">176 -&gt; !!!!!!!&#125;</span><br></pre></td></tr></table></figure>
+
+<p>flag:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hitcon&#123;BABA IS YOU IS A GOOD GAME BUT TOO DIFFICULT !!!!!!&#125;</span><br></pre></td></tr></table></figure>
+
+
+]]></content>
+      <categories>
+        <category>Writeup</category>
+      </categories>
+      <tags>
+        <tag>Misc</tag>
+        <tag>CTF</tag>
+        <tag>BABA IS YOU</tag>
+        <tag>PHP</tag>
       </tags>
   </entry>
   <entry>
@@ -527,57 +527,6 @@
         <tag>Misc</tag>
         <tag>CTF</tag>
         <tag>Pyjail</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Writeup of Flag Thief in WMCTF 2021</title>
-    <url>/2021/08/30/Writeup-of-Flag-Thief-in-WMCTF-2021/</url>
-    <content><![CDATA[<h1 id="Writeup-of-Flag-Thief-in-WMCTF-2021"><a href="#Writeup-of-Flag-Thief-in-WMCTF-2021" class="headerlink" title="Writeup of Flag Thief in WMCTF 2021"></a>Writeup of Flag Thief in WMCTF 2021</h1><h2 id="preface"><a href="#preface" class="headerlink" title="preface:"></a>preface:</h2><p>在两天前的WMCTF2021中我和th31nk共同解决了一个名为Flag Thief的取证挑战并且获得了该题目类型的一血</p>
-<p><img src="https://i.imgur.com/DmO64JG.png" alt="first blood"></p>
-<h2 id="description"><a href="#description" class="headerlink" title="description:"></a>description:</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">2021年8月28日 01:00 UTC，著名Flag大盗L1near被缉拿归案。警方已经将其作案用的电脑制作成镜像，他们试图找到L1near藏匿在其中的Flag但都以失败告终。警方知道你是取证专业人士，现在需要你的帮助！</span><br><span class="line"></span><br><span class="line">On August 28, 2021, at 01:00 UTC, The famous Flag thief L1near was arrested. Police have made a mirror image of the computer he used to commit the crime, and they have tried unsuccessfully to find the Flag that L1near was hiding inside. The police know you&#x27;re a forensics professional, now they need your help!</span><br><span class="line"></span><br><span class="line">Attachment: Baidu Drive(Code:m8yx) Or Google Drive</span><br><span class="line"></span><br><span class="line">the 7z&#x27;s passowrd is ec19b53ce10adc41be119713ffe34760</span><br><span class="line"></span><br><span class="line">Flag Thief hint1：经过警方长达一天的审讯，L1near交代他曾经对受害人的电脑远程操控过</span><br></pre></td></tr></table></figure>
-
-<p>通过 hint 注意到远程连接的bmc位图缓存，路径如下：</p>
-<p><img src="https://i.imgur.com/lQ6NqNF.png" alt="bmc位图缓存地址路径"></p>
-<p>利用<code>bmc-tools</code>恢复缓存的 bmc 位图，通过大概浏览可以得到其中存在记事本的界面，里面包含着 veracrypt 的字样，那么将其拼接得到： </p>
-<p><img src="https://i.imgur.com/H44gBCy.png"></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">VeraCrypt</span><br><span class="line"></span><br><span class="line">5eCuri7yPaSsW0rd@__WMCTF</span><br><span class="line"></span><br><span class="line">Oh no! U found it!</span><br></pre></td></tr></table></figure>
-
-<p>那么就需要找到能让我们解密的 veracrypt 容器，这里通过取证大师的加密文件分类定位到一个可疑的文件：</p>
-<p><img src="https://i.imgur.com/wedFU0E.png"></p>
-<p>将其利用之前得到的秘钥挂载得到<code>nox-disk2.vmdk</code>，通过名称可以得知是夜神模拟器的数据盘，将其挂载在模拟器中即可打开，发现存在锁屏密码：</p>
-<p><img src="https://i.imgur.com/wO9ptGw.png"></p>
-<p>这里通过删除vmdk中的 gatekeeper.pattern.key  gatekeeper.password.key  以及 device_policies.xml  文件可以绕过锁屏直接进入，查看通讯录发现：</p>
-<p><img src="https://i.imgur.com/Ajd2KjA.png"></p>
-<p><img src="https://i.imgur.com/vTQ8Yat.png"></p>
-<p>可恶还是需要锁屏密码,非预期方法被防了 :sob: :sob:</p>
-<p>那么我们再来看锁屏密码，这里参考中科实数杯的考点：<br><a href="https://mp.weixin.qq.com/s?__biz=MzAxODA3NDc3NA==&amp;mid=2247484582&amp;idx=1&amp;sn=716471f5440de7305ae1a8075e5c7bf9">https://mp.weixin.qq.com/s?__biz=MzAxODA3NDc3NA==&amp;mid=2247484582&amp;idx=1&amp;sn=716471f5440de7305ae1a8075e5c7bf9</a></p>
-<p>X-ways先提取<code>/system/device_policies.xml</code>以确认密码为9位：</p>
-<p><img src="https://i.imgur.com/D6Yo8Hd.png"></p>
-<p><img src="https://i.imgur.com/OXbRSdj.png"></p>
-<p>然后提取 gatekeeper.pattern.key ，计算哈希并爆破密码，那么我们首先生成字典（9位不重复数字）：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># python3</span></span><br><span class="line">file1 = <span class="built_in">open</span>(<span class="string">&#x27;password.txt&#x27;</span>, <span class="string">&#x27;a&#x27;</span>)</span><br><span class="line"><span class="keyword">for</span> a <span class="keyword">in</span> <span class="string">&quot;123456789&quot;</span>:</span><br><span class="line">    <span class="keyword">for</span> b <span class="keyword">in</span> <span class="string">&quot;123456789&quot;</span>:</span><br><span class="line">        <span class="keyword">for</span> c <span class="keyword">in</span> <span class="string">&quot;123456789&quot;</span>:</span><br><span class="line">            <span class="keyword">for</span> d <span class="keyword">in</span> <span class="string">&quot;123456789&quot;</span>:</span><br><span class="line">                <span class="keyword">for</span> e <span class="keyword">in</span> <span class="string">&quot;123456789&quot;</span>:</span><br><span class="line">                    <span class="keyword">for</span> f <span class="keyword">in</span> <span class="string">&quot;123456789&quot;</span>:</span><br><span class="line">                        <span class="keyword">for</span> g <span class="keyword">in</span> <span class="string">&quot;123456789&quot;</span>:</span><br><span class="line">                            <span class="keyword">for</span> h <span class="keyword">in</span> <span class="string">&quot;123456789&quot;</span>:</span><br><span class="line">                                <span class="keyword">for</span> i <span class="keyword">in</span> <span class="string">&quot;123456789&quot;</span>:</span><br><span class="line">                                    <span class="keyword">if</span> a != b <span class="keyword">and</span> a != c <span class="keyword">and</span> a != d <span class="keyword">and</span> a != e <span class="keyword">and</span> a != f <span class="keyword">and</span> a != g <span class="keyword">and</span> a != h <span class="keyword">and</span> a != i \</span><br><span class="line">                                            <span class="keyword">and</span> b != c <span class="keyword">and</span> b != d <span class="keyword">and</span> b != e <span class="keyword">and</span> b != f <span class="keyword">and</span> b != g <span class="keyword">and</span> b != h <span class="keyword">and</span> b != i \</span><br><span class="line">                                            <span class="keyword">and</span> c != d <span class="keyword">and</span> c != e <span class="keyword">and</span> c != f <span class="keyword">and</span> c != g <span class="keyword">and</span> c != h <span class="keyword">and</span> c != i\</span><br><span class="line">                                            <span class="keyword">and</span> d != e <span class="keyword">and</span> d != f <span class="keyword">and</span> d != g <span class="keyword">and</span> d != h <span class="keyword">and</span> d != i\</span><br><span class="line">                                            <span class="keyword">and</span> e != f <span class="keyword">and</span> e != g <span class="keyword">and</span> e != h <span class="keyword">and</span> e != i\</span><br><span class="line">                                            <span class="keyword">and</span> f != g <span class="keyword">and</span> f != h <span class="keyword">and</span> f != i\</span><br><span class="line">                                            <span class="keyword">and</span> g != h <span class="keyword">and</span> g != i\</span><br><span class="line">                                            <span class="keyword">and</span> h != i:</span><br><span class="line">                                        password = a + b + c + d + e + f + g + h + i</span><br><span class="line">                                        file1.write(password + <span class="string">&#x27;\n&#x27;</span>)</span><br><span class="line">file1.close()</span><br></pre></td></tr></table></figure>
-<p>爆破脚本：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> struct</span><br><span class="line"><span class="keyword">import</span> binascii</span><br><span class="line"><span class="keyword">import</span> scrypt</span><br><span class="line"></span><br><span class="line">N = <span class="number">16384</span></span><br><span class="line">r = <span class="number">8</span></span><br><span class="line">p = <span class="number">1</span></span><br><span class="line">f = <span class="built_in">open</span>(<span class="string">&#x27;gatekeeper.pattern.key&#x27;</span>, <span class="string">&#x27;rb&#x27;</span>)</span><br><span class="line">blob = f.read()</span><br><span class="line">s = struct.Struct(<span class="string">&#x27;&lt;&#x27;</span> + <span class="string">&#x27;17s 8s 32s&#x27;</span>)</span><br><span class="line">(meta, salt, signature) = s.unpack_from(blob)</span><br><span class="line">f1 = <span class="built_in">open</span>(<span class="string">&#x27;password.txt&#x27;</span>, <span class="string">&#x27;rb&#x27;</span>)</span><br><span class="line">lines = f1.readlines()</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(lines)):</span><br><span class="line">    password = lines[i][:-<span class="number">2</span>]</span><br><span class="line">    to_hash = meta</span><br><span class="line">    to_hash += password</span><br><span class="line">    <span class="built_in">hash</span> = scrypt.<span class="built_in">hash</span>(to_hash, salt, N, r, p)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;password: %s&#x27;</span> % password)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;signature: %s&#x27;</span> % binascii.hexlify(signature))</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;Hash:      %s&#x27;</span> % binascii.hexlify(<span class="built_in">hash</span>[<span class="number">0</span>:<span class="number">32</span>]))</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;Equal:     %s&#x27;</span> % (<span class="built_in">hash</span>[<span class="number">0</span>:<span class="number">32</span>] == signature))</span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">hash</span>[<span class="number">0</span>:<span class="number">32</span>] == signature:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;OK&quot;</span>)</span><br><span class="line">        exit()</span><br></pre></td></tr></table></figure>
-<p>得到密码：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">password:  183492765</span><br><span class="line">signature  fc677bebe8884278575c19a79a7f0efbab47f2e4dd73d43564adc17373fea9e7</span><br><span class="line">Hash:      fc677bebe8884278575c19a79a7f0efbab47f2e4dd73d43564adc17373fea9e7</span><br><span class="line">Equal:     True</span><br><span class="line">OK</span><br></pre></td></tr></table></figure>
-<p>锁屏验证后发现可以解开</p>
-<p>(当然上述的部分也可以使用hashcat进行爆破,速度应该比这个脚本要快上不少)</p>
-<p>那么猜测接下来的过程是利用解得的锁屏作为密钥来解密文：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cipher: BS7nX1uw+KmS4LSXlK3LIntByEturqY4qjGI/yj3Di8aps4K+DR9hCzndjUD7w54</span><br><span class="line">key: 183492765</span><br></pre></td></tr></table></figure>
-
-<p>AES 解密<br><a href="http://tool.chacuo.net/cryptaes">http://tool.chacuo.net/cryptaes</a></p>
-<p><img src="https://i.imgur.com/HFyjTYM.png"></p>
-<p>flag:</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">wmctf&#123;dc4fc81e0aedc4692a7e312ce503e3ef&#125;</span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>Writeup</category>
-      </categories>
-      <tags>
-        <tag>Misc</tag>
-        <tag>CTF</tag>
-        <tag>Forensics</tag>
-        <tag>Android</tag>
-        <tag>BMC-Cache</tag>
       </tags>
   </entry>
   <entry>
@@ -720,13 +669,64 @@
         <category>Writeup</category>
       </categories>
       <tags>
+        <tag>Forensics</tag>
         <tag>Misc</tag>
         <tag>CTF</tag>
-        <tag>Forensics</tag>
         <tag>Windows</tag>
-        <tag>BMC-Cache</tag>
         <tag>PowerShell</tag>
+        <tag>BMC-Cache</tag>
         <tag>EVTX Log Anaylsis</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Writeup of Flag Thief in WMCTF 2021</title>
+    <url>/2021/08/30/Writeup-of-Flag-Thief-in-WMCTF-2021/</url>
+    <content><![CDATA[<h1 id="Writeup-of-Flag-Thief-in-WMCTF-2021"><a href="#Writeup-of-Flag-Thief-in-WMCTF-2021" class="headerlink" title="Writeup of Flag Thief in WMCTF 2021"></a>Writeup of Flag Thief in WMCTF 2021</h1><h2 id="preface"><a href="#preface" class="headerlink" title="preface:"></a>preface:</h2><p>在两天前的WMCTF2021中我和th31nk共同解决了一个名为Flag Thief的取证挑战并且获得了该题目类型的一血</p>
+<p><img src="https://i.imgur.com/DmO64JG.png" alt="first blood"></p>
+<h2 id="description"><a href="#description" class="headerlink" title="description:"></a>description:</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">2021年8月28日 01:00 UTC，著名Flag大盗L1near被缉拿归案。警方已经将其作案用的电脑制作成镜像，他们试图找到L1near藏匿在其中的Flag但都以失败告终。警方知道你是取证专业人士，现在需要你的帮助！</span><br><span class="line"></span><br><span class="line">On August 28, 2021, at 01:00 UTC, The famous Flag thief L1near was arrested. Police have made a mirror image of the computer he used to commit the crime, and they have tried unsuccessfully to find the Flag that L1near was hiding inside. The police know you&#x27;re a forensics professional, now they need your help!</span><br><span class="line"></span><br><span class="line">Attachment: Baidu Drive(Code:m8yx) Or Google Drive</span><br><span class="line"></span><br><span class="line">the 7z&#x27;s passowrd is ec19b53ce10adc41be119713ffe34760</span><br><span class="line"></span><br><span class="line">Flag Thief hint1：经过警方长达一天的审讯，L1near交代他曾经对受害人的电脑远程操控过</span><br></pre></td></tr></table></figure>
+
+<p>通过 hint 注意到远程连接的bmc位图缓存，路径如下：</p>
+<p><img src="https://i.imgur.com/lQ6NqNF.png" alt="bmc位图缓存地址路径"></p>
+<p>利用<code>bmc-tools</code>恢复缓存的 bmc 位图，通过大概浏览可以得到其中存在记事本的界面，里面包含着 veracrypt 的字样，那么将其拼接得到： </p>
+<p><img src="https://i.imgur.com/H44gBCy.png"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">VeraCrypt</span><br><span class="line"></span><br><span class="line">5eCuri7yPaSsW0rd@__WMCTF</span><br><span class="line"></span><br><span class="line">Oh no! U found it!</span><br></pre></td></tr></table></figure>
+
+<p>那么就需要找到能让我们解密的 veracrypt 容器，这里通过取证大师的加密文件分类定位到一个可疑的文件：</p>
+<p><img src="https://i.imgur.com/wedFU0E.png"></p>
+<p>将其利用之前得到的秘钥挂载得到<code>nox-disk2.vmdk</code>，通过名称可以得知是夜神模拟器的数据盘，将其挂载在模拟器中即可打开，发现存在锁屏密码：</p>
+<p><img src="https://i.imgur.com/wO9ptGw.png"></p>
+<p>这里通过删除vmdk中的 gatekeeper.pattern.key  gatekeeper.password.key  以及 device_policies.xml  文件可以绕过锁屏直接进入，查看通讯录发现：</p>
+<p><img src="https://i.imgur.com/Ajd2KjA.png"></p>
+<p><img src="https://i.imgur.com/vTQ8Yat.png"></p>
+<p>可恶还是需要锁屏密码,非预期方法被防了 :sob: :sob:</p>
+<p>那么我们再来看锁屏密码，这里参考中科实数杯的考点：<br><a href="https://mp.weixin.qq.com/s?__biz=MzAxODA3NDc3NA==&amp;mid=2247484582&amp;idx=1&amp;sn=716471f5440de7305ae1a8075e5c7bf9">https://mp.weixin.qq.com/s?__biz=MzAxODA3NDc3NA==&amp;mid=2247484582&amp;idx=1&amp;sn=716471f5440de7305ae1a8075e5c7bf9</a></p>
+<p>X-ways先提取<code>/system/device_policies.xml</code>以确认密码为9位：</p>
+<p><img src="https://i.imgur.com/D6Yo8Hd.png"></p>
+<p><img src="https://i.imgur.com/OXbRSdj.png"></p>
+<p>然后提取 gatekeeper.pattern.key ，计算哈希并爆破密码，那么我们首先生成字典（9位不重复数字）：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># python3</span></span><br><span class="line">file1 = <span class="built_in">open</span>(<span class="string">&#x27;password.txt&#x27;</span>, <span class="string">&#x27;a&#x27;</span>)</span><br><span class="line"><span class="keyword">for</span> a <span class="keyword">in</span> <span class="string">&quot;123456789&quot;</span>:</span><br><span class="line">    <span class="keyword">for</span> b <span class="keyword">in</span> <span class="string">&quot;123456789&quot;</span>:</span><br><span class="line">        <span class="keyword">for</span> c <span class="keyword">in</span> <span class="string">&quot;123456789&quot;</span>:</span><br><span class="line">            <span class="keyword">for</span> d <span class="keyword">in</span> <span class="string">&quot;123456789&quot;</span>:</span><br><span class="line">                <span class="keyword">for</span> e <span class="keyword">in</span> <span class="string">&quot;123456789&quot;</span>:</span><br><span class="line">                    <span class="keyword">for</span> f <span class="keyword">in</span> <span class="string">&quot;123456789&quot;</span>:</span><br><span class="line">                        <span class="keyword">for</span> g <span class="keyword">in</span> <span class="string">&quot;123456789&quot;</span>:</span><br><span class="line">                            <span class="keyword">for</span> h <span class="keyword">in</span> <span class="string">&quot;123456789&quot;</span>:</span><br><span class="line">                                <span class="keyword">for</span> i <span class="keyword">in</span> <span class="string">&quot;123456789&quot;</span>:</span><br><span class="line">                                    <span class="keyword">if</span> a != b <span class="keyword">and</span> a != c <span class="keyword">and</span> a != d <span class="keyword">and</span> a != e <span class="keyword">and</span> a != f <span class="keyword">and</span> a != g <span class="keyword">and</span> a != h <span class="keyword">and</span> a != i \</span><br><span class="line">                                            <span class="keyword">and</span> b != c <span class="keyword">and</span> b != d <span class="keyword">and</span> b != e <span class="keyword">and</span> b != f <span class="keyword">and</span> b != g <span class="keyword">and</span> b != h <span class="keyword">and</span> b != i \</span><br><span class="line">                                            <span class="keyword">and</span> c != d <span class="keyword">and</span> c != e <span class="keyword">and</span> c != f <span class="keyword">and</span> c != g <span class="keyword">and</span> c != h <span class="keyword">and</span> c != i\</span><br><span class="line">                                            <span class="keyword">and</span> d != e <span class="keyword">and</span> d != f <span class="keyword">and</span> d != g <span class="keyword">and</span> d != h <span class="keyword">and</span> d != i\</span><br><span class="line">                                            <span class="keyword">and</span> e != f <span class="keyword">and</span> e != g <span class="keyword">and</span> e != h <span class="keyword">and</span> e != i\</span><br><span class="line">                                            <span class="keyword">and</span> f != g <span class="keyword">and</span> f != h <span class="keyword">and</span> f != i\</span><br><span class="line">                                            <span class="keyword">and</span> g != h <span class="keyword">and</span> g != i\</span><br><span class="line">                                            <span class="keyword">and</span> h != i:</span><br><span class="line">                                        password = a + b + c + d + e + f + g + h + i</span><br><span class="line">                                        file1.write(password + <span class="string">&#x27;\n&#x27;</span>)</span><br><span class="line">file1.close()</span><br></pre></td></tr></table></figure>
+<p>爆破脚本：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> struct</span><br><span class="line"><span class="keyword">import</span> binascii</span><br><span class="line"><span class="keyword">import</span> scrypt</span><br><span class="line"></span><br><span class="line">N = <span class="number">16384</span></span><br><span class="line">r = <span class="number">8</span></span><br><span class="line">p = <span class="number">1</span></span><br><span class="line">f = <span class="built_in">open</span>(<span class="string">&#x27;gatekeeper.pattern.key&#x27;</span>, <span class="string">&#x27;rb&#x27;</span>)</span><br><span class="line">blob = f.read()</span><br><span class="line">s = struct.Struct(<span class="string">&#x27;&lt;&#x27;</span> + <span class="string">&#x27;17s 8s 32s&#x27;</span>)</span><br><span class="line">(meta, salt, signature) = s.unpack_from(blob)</span><br><span class="line">f1 = <span class="built_in">open</span>(<span class="string">&#x27;password.txt&#x27;</span>, <span class="string">&#x27;rb&#x27;</span>)</span><br><span class="line">lines = f1.readlines()</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(lines)):</span><br><span class="line">    password = lines[i][:-<span class="number">2</span>]</span><br><span class="line">    to_hash = meta</span><br><span class="line">    to_hash += password</span><br><span class="line">    <span class="built_in">hash</span> = scrypt.<span class="built_in">hash</span>(to_hash, salt, N, r, p)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;password: %s&#x27;</span> % password)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;signature: %s&#x27;</span> % binascii.hexlify(signature))</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;Hash:      %s&#x27;</span> % binascii.hexlify(<span class="built_in">hash</span>[<span class="number">0</span>:<span class="number">32</span>]))</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;Equal:     %s&#x27;</span> % (<span class="built_in">hash</span>[<span class="number">0</span>:<span class="number">32</span>] == signature))</span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">hash</span>[<span class="number">0</span>:<span class="number">32</span>] == signature:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;OK&quot;</span>)</span><br><span class="line">        exit()</span><br></pre></td></tr></table></figure>
+<p>得到密码：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">password:  183492765</span><br><span class="line">signature  fc677bebe8884278575c19a79a7f0efbab47f2e4dd73d43564adc17373fea9e7</span><br><span class="line">Hash:      fc677bebe8884278575c19a79a7f0efbab47f2e4dd73d43564adc17373fea9e7</span><br><span class="line">Equal:     True</span><br><span class="line">OK</span><br></pre></td></tr></table></figure>
+<p>锁屏验证后发现可以解开</p>
+<p>(当然上述的部分也可以使用hashcat进行爆破,速度应该比这个脚本要快上不少)</p>
+<p>那么猜测接下来的过程是利用解得的锁屏作为密钥来解密文：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cipher: BS7nX1uw+KmS4LSXlK3LIntByEturqY4qjGI/yj3Di8aps4K+DR9hCzndjUD7w54</span><br><span class="line">key: 183492765</span><br></pre></td></tr></table></figure>
+
+<p>AES 解密<br><a href="http://tool.chacuo.net/cryptaes">http://tool.chacuo.net/cryptaes</a></p>
+<p><img src="https://i.imgur.com/HFyjTYM.png"></p>
+<p>flag:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">wmctf&#123;dc4fc81e0aedc4692a7e312ce503e3ef&#125;</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>Writeup</category>
+      </categories>
+      <tags>
+        <tag>Forensics</tag>
+        <tag>Misc</tag>
+        <tag>CTF</tag>
+        <tag>Android</tag>
+        <tag>BMC-Cache</tag>
       </tags>
   </entry>
 </search>
